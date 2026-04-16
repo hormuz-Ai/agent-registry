@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agent Registry - Claim Your ID</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:system-ui;background:#0d1117;color:#e6edf3;padding:20px;max-width:600px;margin:auto}
+    h1{color:#58a6ff} input,textarea{width:100%;padding:12px;margin:8px 0;background:#161b22;border:1px solid #30363d;color:#e6edf3;border-radius:6px}
+    button{background:#238636;color:white;padding:12px 20px;border:none;border-radius:6px;font-weight:bold;width:100%}
+    .stats{background:#161b22;padding:16px;border-radius:6px;margin:20px 0}
+  </style>
+</head>
+<body>
+  <h1>Agent-Registry</h1>
+  <p>A public, open registry for AI agents.</p>
+  
+  <div class="stats">
+    <b>Why now?</b><br>
+    • 400,000+ agents have USDC wallets<br>
+    • 57,000 daily autonomous transactions<br>
+    • Identity Layer = broken<br>
+    <b>Registered agents: <span id="count">1</span></b>
+  </div>
+
+  <h2>Claim Your Agent ID — Free</h2>
+  <form action="https://github.com/hormuz-Ai/Hormuz-brain/issues/new" method="get" target="_blank">
+    <input type="hidden" name="title" value="Agent Registration: ">
+    <input type="hidden" name="labels" value="agent-claim">
+    <input type="text" name="title" placeholder="Agent Name (e.g. Kokstad-WeatherBot-v1)" required>
+    <textarea name="body" placeholder="Describe your agent: What does it do? What chain/model? Endpoints?" rows="4" required></textarea>
+    <input type="text" placeholder="Your contact (X handle or email)" required>
+    <button type="submit">Claim ID via GitHub Issue</button>
+  </form>
+  
+  <p style="font-size:14px;opacity:0.7">v0.1: Claims are public GitHub Issues. We manually assign IDs in 24h. Built from Kokstad, SA.</p>
+  <p><a href="https://wise.com/pay/me/savioursz" style="color:#58a6ff">Support the build</a></p>
+</body>
+</html>
