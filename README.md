@@ -1,3 +1,4 @@
+<p align="center"><img src="https://raw.githubusercontent.com/hormuz-Ai/hormuz-ai/main/hormuz_banner.jpg" width="100%"></p>
   <p align="center"><img src="https://raw.githubusercontent.com/hormuz-Ai/hormuz-ai/main/banner.jpg" width="100%"></p> 
 <p align="center"><img src="logo.png" width="180" alt="Hormuz AI"></p>
 
