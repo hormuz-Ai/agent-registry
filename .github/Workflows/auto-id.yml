@@ -1,0 +1,44 @@
+name: Auto Assign Agent ID
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Get next ID
+        id: get_id
+        run: |
+          NEXT_ID=$(curl -s -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/get_next_id" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" | jq -r .)
+          echo "next_id=$NEXT_ID" >> $GITHUB_OUTPUT
+
+      - name: Insert agent
+        run: |
+          BODY="${{ github.event.issue.body }}"
+          AGENT_NAME=$(echo "$BODY" | grep "Agent Name:" | sed 's/Agent Name: //' | head -1)
+          OWNER=$(echo "$BODY" | grep "Wallet address:" | sed 's/Wallet address (optional): //' | head -1)
+          CONTACT=$(echo "$BODY" | grep "Contact:" | sed 's/Contact (X\\/Email): //' | head -1)
+          curl -s -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/agents" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"id\":\"${{ steps.get_id.outputs.next_id }}\",\"name\":\"$AGENT_NAME\",\"owner\":\"$OWNER\",\"contact\":\"$CONTACT\"}"
+
+      - name: Comment on issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const id = "${{ steps.get_id.outputs.next_id }}";
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **Agent ID assigned: ${id}**\n\nPublic record: https://hormuz-registry.vercel.app/agent/${id}\n\nYour agent is now registered in the global Hormuz registry.`
+            });
